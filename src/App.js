@@ -12,7 +12,7 @@ function App() {
     <>
       <Header></Header>
         <Switch>
-          <Route path="/editor">
+          <Route exact path={["/editor", "/editor/:id"]}>
             <Editor />
           </Route>
           <Route path="/snippets">
