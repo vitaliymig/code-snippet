@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
+import { getSnippet, saveSnippet, updateSnippet } from "../api/snippets";
 export default function Editor() {
   const { id } = useParams();
   const history = useHistory();
@@ -11,15 +12,39 @@ export default function Editor() {
   const [documentation, setDocumentation] = useState("");
 
   useEffect(() => {
+    if (id) {
+      (async function () {
+        const [snippetError, snippet] = await getSnippet(id);
+        if (snippetError) {
+          alert(`Error get snippet`);
+        } else {
+          setTitle(snippet.title);
+          setDescription(snippet.description);
+          setLanguage(snippet.lang);
+          setTags(snippet.tags);
+          setCode(snippet.code);
+          setDocumentation(snippet.documentation);
+        }
+      })();
+    }
     console.log(id);
   }, [id]);
 
-  function editorSubmit(e) {
+  function clearEditorForm() {
+    setTitle("");
+    setDescription("");
+    setLanguage("");
+    setTags("");
+    setCode("");
+    setDocumentation("");
+  }
+
+  async function editorSubmit(e) {
     e.preventDefault();
     if (!id) {
       const newSnippet = {
-        createAt: Date.now(),
-        updateAt: null,
+        createdAt: Date.now(),
+        updatedAt: null,
         pinned: false,
         copied: 0,
         views: 0,
@@ -31,14 +56,35 @@ export default function Editor() {
         tags,
       };
 
-      console.log(newSnippet);
-      setTitle("");
-      setDescription("");
-      setLanguage("");
-      setTags("");
-      setCode("");
-      setDocumentation("");
+      const [savedSnippetError, savedSnippet] = await saveSnippet(newSnippet);
+      if (savedSnippetError) {
+        alert(`saved-Snippet-Error`);
+      } else {
+        alert(`success-saved-snippet`);
+      }
+    } else {
+      const updatedSnippetData = {
+        updatedAt: Date.now(),
+        title,
+        description,
+        code,
+        documentation,
+        lang,
+        tags,
+      };
+
+      const [updatedSnippetError, updatedSnippet] = await updateSnippet(
+        id,
+        updatedSnippetData
+      );
+      if (updatedSnippetError) {
+        alert(`updated-Snippet-Error`);
+      } else {
+        alert(`success-updated-snippet`);
+      }
     }
+
+    clearEditorForm();
   }
 
   return (
