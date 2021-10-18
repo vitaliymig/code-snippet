@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
 import { getSnippet, saveSnippet, updateSnippet } from "../api/snippets";
+
 export default function Editor() {
   const { id } = useParams();
   const history = useHistory();
@@ -88,60 +89,58 @@ export default function Editor() {
   }
 
   return (
-    <div>
-      <h1>Edit snippet</h1>
-      <button onClick={() => history.goBack()}>Go back</button>
-      <form onSubmit={editorSubmit}>
-        <h2>Snippet details</h2>
-        <label>
-          Title
-          <input
-            required
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-            type="text"
-          />
-        </label>
-        <label>
-          Short discription
-          <input
-            onChange={(e) => setDescription(e.target.value)}
-            value={description}
-            type="text"
-          />
-        </label>
-        <label>
-          Language
-          <input
-            required
-            onChange={(e) => setLanguage(e.target.value)}
-            value={lang}
-            list="langs"
-            type="text"
-          />
-          <datalist id="langs">
-            <option value="HTML">HTML</option>
-            <option value="CSS">CSS</option>
-            <option value="JS">JS</option>
-          </datalist>
-        </label>
-        <label>
-          Tags
-          <input
-            required
-            onChange={(e) => setTags(e.target.value)}
-            value={tags}
-            type="text"
-          />
-        </label>
-        <hr />
+    <div className="editor__container">
+      <h1 className="editor__heading">Edit snippet</h1>
+      <button className="editor__btn" onClick={() => history.goBack()}>
+        Go back
+      </button>
+      <form className="editor__form" onSubmit={editorSubmit}>
+        <h2 className="editor__form-heading">Snippet details</h2>
+        <label for="editorInputTitle">Title</label>
+        <input
+          id="editorInputTitle"
+          required
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+          type="text"
+        />
+        <label for="editorInputDescription">Short discription</label>
+        <input
+          id="editorInputDescription"
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+          type="text"
+        />
+        <label for="editorInputLang">Language</label>
+        <datalist id="langs">
+          <option value="HTML">HTML</option>
+          <option value="CSS">CSS</option>
+          <option value="JS">JS</option>
+        </datalist>
+        <input
+          id="editorInputLang"
+          required
+          onChange={(e) => setLanguage(e.target.value)}
+          value={lang}
+          list="langs"
+          type="text"
+        />
+        <label for="editorInputTags">Tags</label>
+        <input
+          id="editorInputTags"
+          required
+          onChange={(e) => setTags(e.target.value)}
+          value={tags}
+          type="text"
+        />
+        <hr className="editor__hr" />
         <h2>Snippet code</h2>
         <textarea
           required
           onChange={(e) => setCode(e.target.value)}
           value={code}
         ></textarea>
-        <hr />
+        <hr className="editor__hr" />
         <h2>Snippet documentation</h2>
         <textarea
           onChange={(e) => setDocumentation(e.target.value)}

@@ -1,9 +1,6 @@
 import axios from "axios";
 
 
-
-
-
 const api = axios.create({
     baseURL: '//localhost:1234/snippets',
     headers: {'content-type': 'application/json;charset=utf-8'}
