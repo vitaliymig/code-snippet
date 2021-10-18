@@ -201,7 +201,7 @@ a {
   background-color: var(--bg-main-color);
 }
 
-.editor__hr {
+.editor__form hr {
   width: 100%;
 }
 

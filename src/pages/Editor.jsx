@@ -133,14 +133,14 @@ export default function Editor() {
           value={tags}
           type="text"
         />
-        <hr className="editor__hr" />
+        <hr />
         <h2>Snippet code</h2>
         <textarea
           required
           onChange={(e) => setCode(e.target.value)}
           value={code}
         ></textarea>
-        <hr className="editor__hr" />
+        <hr />
         <h2>Snippet documentation</h2>
         <textarea
           onChange={(e) => setDocumentation(e.target.value)}
