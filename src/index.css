@@ -190,6 +190,7 @@ a {
   padding: 30px 0;
   width: 1000px;
 }
+
 .editor__heading {
   margin-bottom: 15px;
   font-size: 26px;
@@ -220,6 +221,7 @@ a {
   flex-direction: column;
   padding: 20px;
   background-color: var(--bg-main-color);
+  border-radius: 5px;
 }
 
 .editor__form hr {
