@@ -133,26 +133,38 @@ export default function Editor() {
           value={tags}
           type="text"
         />
+        <p className="editor__form-tags-description">
+          Tags should be separated with a coma. Language tag will be added
+          automatically
+        </p>
         <hr />
-        <h2>Snippet code</h2>
+        <h2 className="editor__form-heading">Snippet code</h2>
         <textarea
+          rows="10"
           required
           onChange={(e) => setCode(e.target.value)}
           value={code}
         ></textarea>
         <hr />
-        <h2>Snippet documentation</h2>
+        <h2 className="editor__form-heading">Snippet documentation</h2>
         <textarea
+          rows="10"
           onChange={(e) => setDocumentation(e.target.value)}
           value={documentation}
         ></textarea>
-        <button type="submit">
-          {!id && "Create"}
-          {id && "Edit"}
-        </button>
-        <button type="button" onClick={() => history.replace("/")}>
-          Cancel
-        </button>
+        <div className="editor__form-btns">
+          <button className="btn-standart" type="submit">
+            {!id && "Create"}
+            {id && "Edit"}
+          </button>
+          <button
+            className="btn-standart"
+            type="button"
+            onClick={() => history.replace("/")}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );
