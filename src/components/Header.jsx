@@ -14,6 +14,9 @@ export default function Header() {
           <li>
             <Link to="/snippets">Snippets</Link>
           </li>
+          <li>
+            <Link to="/snippet">Snippet</Link>
+          </li>
         </ul>
       </nav>
     </header>

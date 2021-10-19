@@ -91,7 +91,7 @@ export default function Editor() {
   return (
     <div className="editor__container">
       <h1 className="editor__heading">Edit snippet</h1>
-      <button className="editor__btn" onClick={() => history.goBack()}>
+      <button className="go-back-btn" onClick={() => history.goBack()}>
         Go back
       </button>
       <form className="editor__form" onSubmit={editorSubmit}>
