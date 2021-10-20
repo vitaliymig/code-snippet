@@ -16,7 +16,7 @@ function App() {
         <Route path="/snippets">
           <Snippets />
         </Route>
-        <Route path="/snippet">
+        <Route exact path={["/snippet", "/snippet/:id"]}>
           <Snippet />
         </Route>
         <Route path="/">

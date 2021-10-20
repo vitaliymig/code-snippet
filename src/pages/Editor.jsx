@@ -22,7 +22,7 @@ export default function Editor() {
           setTitle(snippet.title);
           setDescription(snippet.description);
           setLanguage(snippet.lang);
-          setTags(snippet.tags);
+          setTags(snippet.tags.join());
           setCode(snippet.code);
           setDocumentation(snippet.documentation);
         }
@@ -54,7 +54,7 @@ export default function Editor() {
         code,
         documentation,
         lang,
-        tags,
+        tags: tags.split(","),
       };
 
       const [savedSnippetError, savedSnippet] = await saveSnippet(newSnippet);
@@ -71,7 +71,7 @@ export default function Editor() {
         code,
         documentation,
         lang,
-        tags,
+        tags: tags.split(","),
       };
 
       const [updatedSnippetError, updatedSnippet] = await updateSnippet(
