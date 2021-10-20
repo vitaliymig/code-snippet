@@ -1,6 +1,6 @@
 import { useHistory, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import { getSnippet } from "../api/snippets";
+import { deleteSnippet, getSnippet } from "../api/snippets";
 
 export default function Snippet() {
   const history = useHistory();
@@ -15,12 +15,29 @@ export default function Snippet() {
         const [snippetError, snippet] = await getSnippet(id);
         if (snippetError) {
           alert(`Error get snippet`);
+          history.replace(`/`);
         } else {
           setSnippetData(snippet);
         }
       })();
     }
   }, [id]);
+
+  function editSnippet() {
+    history.push(`/editor/${id}`);
+  }
+
+  async function removeSnippet() {
+    const answer = window.confirm(`Are you sure?`);
+    if (answer) {
+      const [snippetError] = await deleteSnippet(id);
+      if (snippetError) {
+        alert(`Error deleting snippet`);
+      } else {
+        history.push(`/`);
+      }
+    }
+  }
 
   if (!snippetData) {
     return <div>Loading.....</div>;
@@ -35,30 +52,44 @@ export default function Snippet() {
         <pre className="snippet__code">{snippetData.code}</pre>
         <div className="snippet__card">
           <div className="snippet__card-header">
-            <h3>{snippetData.title}</h3>
+            <h1 className="snippet__card-title">{snippetData.title}</h1>
             <button>^</button>
           </div>
-          <h4 className="snippet__card-description">
-            {snippetData.description}
-          </h4>
-          <div className="snippet__card-about">
-            <div className="snippet__card-about-col">
-              <span>Language</span>
-              <span>Created</span>
-              <span>Last updated</span>
+          {snippetData.description && (
+            <h2 className="snippet__card-description">
+              {snippetData.description}
+            </h2>
+          )}
+          <dl className="snippet__card-about">
+            <div>
+              <dt>Language</dt>
+              <dd>{snippetData.lang}</dd>
             </div>
-            <div className="snippet__card-about-col snippet__card-about-col-right-side">
-              <span>{snippetData.lang}</span>
-              <span>{snippetData.createAt}</span>
-              <span>{snippetData.updatedAt}</span>
+            <div>
+              <dt>Created</dt>
+              <dd>{snippetData.createdAt}</dd>
             </div>
+            <div>
+              <dt>Last updated</dt>
+              <dd>{snippetData.updatedAt || "-"}</dd>
+            </div>
+          </dl>
+          <hr />
+          <div className="snippet__tags">
+            {snippetData.tags.map((tag) => (
+              <span key={tag} className="snippet__tag">
+                {tag}
+              </span>
+            ))}
           </div>
           <hr />
-          <span>{snippetData.tags}</span>
-          <hr />
           <div className="snippet__card-btns">
-            <button className="btn-standart">Edit</button>
-            <button className="btn-delete">Delete</button>
+            <button onClick={editSnippet} className="btn-standart">
+              Edit
+            </button>
+            <button onClick={removeSnippet} className="btn-delete">
+              Delete
+            </button>
             <button className="btn-copy-code">Copy code</button>
           </div>
         </div>

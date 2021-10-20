@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
 import { getSnippet, saveSnippet, updateSnippet } from "../api/snippets";
+import { deduplicate } from "../utils/utils";
+
+
 
 export default function Editor() {
   const { id } = useParams();
@@ -54,7 +57,7 @@ export default function Editor() {
         code,
         documentation,
         lang,
-        tags: tags.split(","),
+        tags: deduplicate(tags.split(",")),
       };
 
       const [savedSnippetError, savedSnippet] = await saveSnippet(newSnippet);
@@ -71,7 +74,7 @@ export default function Editor() {
         code,
         documentation,
         lang,
-        tags: tags.split(","),
+        tags: deduplicate(tags.split(",")),
       };
 
       const [updatedSnippetError, updatedSnippet] = await updateSnippet(
@@ -96,7 +99,7 @@ export default function Editor() {
       </button>
       <form className="editor__form" onSubmit={editorSubmit}>
         <h2 className="editor__form-heading">Snippet details</h2>
-        <label for="editorInputTitle">Title</label>
+        <label htmlFor="editorInputTitle">Title</label>
         <input
           id="editorInputTitle"
           required
@@ -104,14 +107,14 @@ export default function Editor() {
           value={title}
           type="text"
         />
-        <label for="editorInputDescription">Short discription</label>
+        <label htmlFor="editorInputDescription">Short discription</label>
         <input
           id="editorInputDescription"
           onChange={(e) => setDescription(e.target.value)}
           value={description}
           type="text"
         />
-        <label for="editorInputLang">Language</label>
+        <label htmlFor="editorInputLang">Language</label>
         <datalist id="langs">
           <option value="HTML">HTML</option>
           <option value="CSS">CSS</option>
@@ -125,7 +128,7 @@ export default function Editor() {
           list="langs"
           type="text"
         />
-        <label for="editorInputTags">Tags</label>
+        <label htmlFor="editorInputTags">Tags</label>
         <input
           id="editorInputTags"
           required
