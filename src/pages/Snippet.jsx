@@ -67,11 +67,15 @@ export default function Snippet() {
             </div>
             <div>
               <dt>Created</dt>
-              <dd>{snippetData.createdAt}</dd>
+              <dd>{new Date(snippetData.createdAt).toLocaleString()}</dd>
             </div>
             <div>
               <dt>Last updated</dt>
-              <dd>{snippetData.updatedAt || "-"}</dd>
+              <dd>
+                {snippetData.updatedAt
+                  ? new Date(snippetData.updatedAt).toLocaleString()
+                  : "-"}
+              </dd>
             </div>
           </dl>
           <hr />
